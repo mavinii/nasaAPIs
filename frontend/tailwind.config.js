@@ -9,6 +9,10 @@ export default {
       fontFamily: {
         sans: 'Inter',
       },
+      backgroundImage: {
+        background: "url('/background-galaxy.png')",
+        'image-gradient': 'linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.9) 70%)',
+      },
     },
   },
   plugins: [],
