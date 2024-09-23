@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
 import ContentBanner from './compoments/ContentBanner';
 import logoImage from '/Bounce_Insights_Logo.svg';
+import * as Dialog from '@radix-ui/react-dialog';
+import ContentFooter from './compoments/ContentFooter';
 
-interface Banner {
+interface ApodData {
   copyright: string;
   date: string;
   explanation: string;
@@ -13,14 +15,22 @@ interface Banner {
 }
 
 export function App() {
-  const [banner, setBanner] = useState<Banner[]>([]);
-
+  const [banner, setBanner] = useState<ApodData[]>([]);
+  
+  // NASA's Astronomy Picture of the Day (APOD) API
   useEffect(() => {
-    // https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY
-    fetch('example...')
-      .then(response => response.json())
-      .then(data => setBanner(data));
-  } , []);
+    async function fetchAPIDataApod() {
+      try {
+        const response = await fetch('http://localhost:3001/nasa-apod');
+        const apiData = await response.json();
+        setBanner([apiData]);
+        console.log('API Data:', apiData);
+      } catch (error) {
+        console.error('Error fetching from backend:', error);
+      }
+     }
+    fetchAPIDataApod();
+  }, []);
 
   return (
     <div className='max-w-[1344px] mx-auto flex flex-col items-center justify-center'>
@@ -33,41 +43,41 @@ export function App() {
       </div>
 
       {/* Content Box */}
-      <div className='grid grid-cols-6 gap-6 mt-16'>
-        
-        {/* {banner.map(banner => {
-          return(
-            <ContentBanner
-              key={banner.date}
-              bannerUrl={banner.url}
-              title={banner.title} 
-              description={banner.explanation}
-            />
-          )
-        })} */}
+      <div className='grid grid-cols-3 gap-6 mt-16'>
 
-        <ContentBanner
-          bannerUrl='./game-1.png'
-          title='Game 1' 
-          description='This is a game.'
-        />
-      
+        <Dialog.Root>
+          {banner.map(banner => {
+            const shortenedDescription = banner.explanation.split(' ').slice(0, 15).join(' ') + '...';
+
+            return (
+              <div key={banner.date}>
+                <ContentBanner
+                  bannerUrl={banner.media_type === 'image' ? banner.url : banner.hdurl}
+                  date={banner.date}
+                  title={banner.title}
+                  description={shortenedDescription}
+                />
+                <Dialog.Portal>
+                  <Dialog.Overlay className="bg-black/60 fixed inset-0" />
+                  <Dialog.Content className="fixed bg-[#262634] py-8 px-10 text-white top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-lg w-[480px] shadow-lg">
+                    <Dialog.Title className="text-2xl">
+                      {banner.title}
+                    </Dialog.Title>
+                    <Dialog.Description className='pt-4'>
+                      {banner.explanation}
+                    </Dialog.Description>
+                  </Dialog.Content>
+                </Dialog.Portal>
+              </div>
+            );
+          })}
+        </Dialog.Root>
+
       </div>
 
-      {/* Know More Box */}
-      <div className='pt-1 self-stretch rounded-lg mt-8'>
-        <div className='bg-[#2A2634] px-8 py-6 flex justify-between items-center rounded-lg '>
-          <div>
-            <strong className='text-2xl text-white block'>Know More</strong>
-            <span className='text-zinc-400 block'>
-              Click the button below to know more about Bounce Insights.
-            </span>
-          </div>
-          <button className='font-bold px-4 py-3 bg-[#dd4bd8] hover:bg-[#973394] rounded-lg'>
-            Know More
-          </button>
-        </div>
-      </div>
+      {/* About this project */}
+      <ContentFooter />
+
     </div>
   )
 }
