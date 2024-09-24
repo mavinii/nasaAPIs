@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
-import logoImage from '/Bounce_Insights_Logo.svg';
 import * as Dialog from '@radix-ui/react-dialog';
-import ContentFooter from './compoments/ContentFooter';
 import MarsBanners from './compoments/MarsBanner';
 import ApodBanner from './compoments/ApodBanner';
+import BounceInsightsBanner from './compoments/BounceInsightsBanner';
 
 interface ApodData {
   copyright: string;
@@ -78,79 +77,79 @@ export function App() {
   }, []);
   
   return (
-    <div className='max-w-[1344px] mx-auto flex flex-col items-center justify-center'>
+     <div className="bg-white py-24 sm:py-32">
+      <div className="mx-auto max-w-7xl px-6 lg:px-8">
 
-      {/* Logo, Title and Subtitle */}
-      <div className='flex flex-col items-center gap-3'>
-        <img src={logoImage} alt="Bounce Insights" className='w-72 mt-32' />
-        <h1 className='text-white text-4xl'>Software Engineer Challenge</h1>
-        <p className="text-zinc-300 text-base">Web App that consumes NASA's APIs to display data by Marcos Oliveira.</p>
+        {/* Header */}
+        <div className="mx-auto max-w-2xl lg:mx-0">
+          <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Software Engineer Challenge</h2>
+          <p className="mt-2 text-lg leading-8 text-gray-600">
+          Web App that consumes NASA's APIs to display data by <a href='https://www.linkedin.com/in/pgmarcosoliveira/' className='font-bold'>Marcos Oliveira</a>.
+          </p>
+        </div>
+
+        <div className="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-t border-gray-200 pt-10 sm:mt-16 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+          {/* Card 1 */}
+          <Dialog.Root>
+            {bannerApodData.map(bannerApodData => {
+              const shortenedDescription = bannerApodData.explanation.split(' ').slice(0, 15).join(' ') + '...';
+
+              return (
+                <div key={bannerApodData.date}>
+                  <ApodBanner
+                    bannerUrl={bannerApodData.media_type === 'image' ? bannerApodData.url : bannerApodData.hdurl}
+                    date={bannerApodData.date}
+                    title={bannerApodData.title}
+                    description={shortenedDescription}
+                  />
+                  <Dialog.Portal>
+                    <Dialog.Overlay className="bg-black/60 fixed inset-0" />
+                    <Dialog.Content className="fixed bg-[#262634] py-8 px-10 text-white top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-lg w-[480px] shadow-lg">
+                      <Dialog.Title className="text-2xl">
+                        {bannerApodData.title}
+                      </Dialog.Title>
+                      <Dialog.Description className='pt-4'>
+                        {bannerApodData.explanation}
+                      </Dialog.Description>
+                    </Dialog.Content>
+                  </Dialog.Portal>
+                </div>
+              );
+            })}
+          </Dialog.Root>
+
+          {/* Card 2 */}
+          <Dialog.Root>
+            {bannerMarsData.map(photo => {
+              return (
+                <div key={photo.id}>
+                  <MarsBanners
+                    img_src={photo.img_src}
+                    earth_date={photo.earth_date}
+                    camera_full_name={photo.camera.full_name}
+                    rover_name={photo.rover.name}
+                    id={photo.id.toString()}
+                  />
+                  <Dialog.Portal>
+                    <Dialog.Overlay className="bg-black/60 fixed inset-0" />
+                    <Dialog.Content className="fixed bg-[#262634] py-8 px-10 text-white top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-lg w-[480px] shadow-lg">
+                      <Dialog.Title className="text-2xl">
+                        Photo ID: {photo.id}
+                      </Dialog.Title>
+                      <Dialog.Description className='pt-4'>
+                        Taken by {photo.rover.name} Rover using {photo.camera.full_name} on {photo.earth_date}.
+                      </Dialog.Description>
+                    </Dialog.Content>
+                  </Dialog.Portal>
+                </div>
+              );
+            })}
+          </Dialog.Root>
+            
+          {/* Bounce Insights Card */}
+          <BounceInsightsBanner />
+        </div>
       </div>
-
-      {/* Content Box */}
-      <div className='grid grid-cols-3 gap-6 mt-16'>
-
-        {/* Card APOD */}
-        <Dialog.Root>
-          {bannerApodData.map(bannerApodData => {
-            const shortenedDescription = bannerApodData.explanation.split(' ').slice(0, 15).join(' ') + '...';
-
-            return (
-              <div key={bannerApodData.date}>
-                <ApodBanner
-                  bannerUrl={bannerApodData.media_type === 'image' ? bannerApodData.url : bannerApodData.hdurl}
-                  date={bannerApodData.date}
-                  title={bannerApodData.title}
-                  description={shortenedDescription}
-                />
-                <Dialog.Portal>
-                  <Dialog.Overlay className="bg-black/60 fixed inset-0" />
-                  <Dialog.Content className="fixed bg-[#262634] py-8 px-10 text-white top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-lg w-[480px] shadow-lg">
-                    <Dialog.Title className="text-2xl">
-                      {bannerApodData.title}
-                    </Dialog.Title>
-                    <Dialog.Description className='pt-4'>
-                      {bannerApodData.explanation}
-                    </Dialog.Description>
-                  </Dialog.Content>
-                </Dialog.Portal>
-              </div>
-            );
-          })}
-        </Dialog.Root>
-
-        {/* Card Mars Rover Photos */}
-        <Dialog.Root>
-          {bannerMarsData.map(photo => {
-            return (
-              <div key={photo.id}>
-                <MarsBanners
-                  img_src={photo.img_src}
-                  earth_date={photo.earth_date}
-                  camera_full_name={photo.camera.full_name}
-                  rover_name={photo.rover.name}
-                  id={photo.id.toString()}
-                />
-                <Dialog.Portal>
-                  <Dialog.Overlay className="bg-black/60 fixed inset-0" />
-                  <Dialog.Content className="fixed bg-[#262634] py-8 px-10 text-white top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-lg w-[480px] shadow-lg">
-                    <Dialog.Title className="text-2xl">
-                      Photo ID: {photo.id}
-                    </Dialog.Title>
-                    <Dialog.Description className='pt-4'>
-                      Taken by {photo.rover.name} Rover using {photo.camera.full_name} on {photo.earth_date}.
-                    </Dialog.Description>
-                  </Dialog.Content>
-                </Dialog.Portal>
-              </div>
-            );
-          })}
-        </Dialog.Root>
-
-      </div>
-
-      {/* About this project */}
-      <ContentFooter />
     </div>
   )
 }

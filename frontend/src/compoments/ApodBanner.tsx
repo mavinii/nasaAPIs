@@ -9,12 +9,10 @@ interface ContentBannerProps {
 
 export default function ApodBanner(props: ContentBannerProps) {
     return (
-        <Dialog.Trigger className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+        <Dialog.Trigger className="flex flex-col h-full bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
             
-            {/* Image */}
-            <img src={props.bannerUrl} alt={props.title} className="rounded-t-lg" />
+            <img src={props.bannerUrl} alt={props.title} className="rounded-t-lg  object-cover h-80 w-full" />
 
-            {/* Content Box */}
             <div className="bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-8 md:p-5 text-left">
                 <a href="#" className="bg-purple-100 text-purple-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded-md dark:bg-gray-700 dark:text-purple-400 mb-2">
                     <svg className="w-2.5 h-2.5 me-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
