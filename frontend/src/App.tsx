@@ -17,11 +17,9 @@ interface ApodData {
 
 interface MarsData {
   id: number;
-  sol: number;
   camera: {
     id: number;
     name: string;
-    rover_id: number;
     full_name: string;
   };
   img_src: string;
@@ -30,8 +28,6 @@ interface MarsData {
     id: number;
     name: string;
     landing_date: string;
-    launch_date: string;
-    status: string;
   };
 }
 
@@ -66,8 +62,14 @@ export function App() {
       try {
         const response = await fetch('http://localhost:3001/mars-photos');
         const apiData = await response.json();
-        setBannerMarsData(apiData.photos);  // Use 'photos' array from the response
-        console.log('Mars Photos API Data:', apiData);
+
+        // Set only the first photo in the photos array
+        if (apiData.photos && apiData.photos.length > 0) {
+          const firstPhoto = apiData.photos[0];
+          setBannerMarsData([firstPhoto]);
+          console.log('Mars Photos API Data:', firstPhoto);
+        }
+      
       } catch (error) {
         console.error('Error fetching Mars Rover photos from backend:', error);
       }
@@ -125,9 +127,9 @@ export function App() {
                 <MarsBanners
                   img_src={photo.img_src}
                   earth_date={photo.earth_date}
-                  camera_full_name={photo.camera.full_name}  // Nested camera details
-                  rover_name={photo.rover.name}  // Nested rover details
-                  id={photo.id.toString()}  // Convert ID to string if needed
+                  camera_full_name={photo.camera.full_name}
+                  rover_name={photo.rover.name}
+                  id={photo.id.toString()}
                 />
                 <Dialog.Portal>
                   <Dialog.Overlay className="bg-black/60 fixed inset-0" />
@@ -149,7 +151,6 @@ export function App() {
 
       {/* About this project */}
       <ContentFooter />
-
     </div>
   )
 }
