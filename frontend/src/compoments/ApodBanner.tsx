@@ -7,7 +7,7 @@ interface ContentBannerProps {
     date: string;
 }
 
-export default function ContentBanner(props: ContentBannerProps) {
+export default function ApodBanner(props: ContentBannerProps) {
     return (
         <Dialog.Trigger className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
             
