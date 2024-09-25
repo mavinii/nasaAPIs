@@ -32,7 +32,7 @@ and
 > npm install
 
 and
-> npm run dev
+> npm start
 
 ## References
 This project is part of a coding challenge proposed by <a href='https://www.bounceinsights.com'>Bounce Insights</a>, which is the insights platform for progressive brand leaders, combining deep expert consultancy with advanced technology.
