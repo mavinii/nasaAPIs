@@ -38,7 +38,7 @@ export function App() {
   useEffect(() => {
     async function fetchAPIDataApod() {
       try {
-        const response = await fetch('https://nasa-ap-is-backend.vercel.app');
+        const response = await fetch('https://nasa-ap-is-backend.vercel.app/nasa-apod');
         const apiData = await response.json();
 
         const cleanedData = {
@@ -59,7 +59,7 @@ export function App() {
   useEffect(() => {
     async function fetchAPIDataMars() {
       try {
-        const response = await fetch('https://nasa-ap-is-backend.vercel.app');
+        const response = await fetch('https://nasa-ap-is-backend.vercel.app/mars-photos');
         const apiData = await response.json();
 
         // Set only the first photo in the photos array
