@@ -84,7 +84,7 @@ export function App() {
         <div className="mx-auto max-w-2xl lg:mx-0">
           <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Software Engineer Challenge</h2>
           <p className="mt-2 text-lg leading-8 text-gray-600">
-          Web App that consumes NASA's APIs to display data by <a href='https://www.linkedin.com/in/pgmarcosoliveira/' className='font-bold'>Marcos Oliveira</a>.
+          Web App that consumes NASA's APIs to display data by <a href='https://www.linkedin.com/in/pgmarcosoliveira/' className='font-bold'>Marcos Oliveira</a>
           </p>
         </div>
 
