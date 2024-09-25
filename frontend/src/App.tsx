@@ -38,7 +38,7 @@ export function App() {
   useEffect(() => {
     async function fetchAPIDataApod() {
       try {
-        const response = await fetch('http://localhost:3001/nasa-apod');
+        const response = await fetch('https://nasa-ap-is-backend.vercel.app');
         const apiData = await response.json();
 
         const cleanedData = {
@@ -59,7 +59,7 @@ export function App() {
   useEffect(() => {
     async function fetchAPIDataMars() {
       try {
-        const response = await fetch('http://localhost:3001/mars-photos');
+        const response = await fetch('https://nasa-ap-is-backend.vercel.app');
         const apiData = await response.json();
 
         // Set only the first photo in the photos array
@@ -84,7 +84,7 @@ export function App() {
         <div className="mx-auto max-w-2xl lg:mx-0">
           <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Software Engineer Challenge</h2>
           <p className="mt-2 text-lg leading-8 text-gray-600">
-          Web App that consumes NASA's APIs to display data by <a href='https://www.linkedin.com/in/pgmarcosoliveira/' className='font-bold'>Marcos Oliveira</a>
+          Web App that consumes NASA's APIs to display data by <a href='https://www.linkedin.com/in/pgmarcosoliveira/' className='font-bold'>Marcos Oliveira</a>.
           </p>
         </div>
 
