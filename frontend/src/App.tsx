@@ -49,7 +49,7 @@ export function App() {
         
         console.log('APOD API Data:', apiData);
       } catch (error) {
-        console.error('Error fetching from backend:', error);
+        console.error('Error fetching Picture of the Day from backend api:', error);
       }
      }
     fetchAPIDataApod();
@@ -70,7 +70,7 @@ export function App() {
         }
       
       } catch (error) {
-        console.error('Error fetching Mars Rover photos from backend:', error);
+        console.error('Error fetching Mars Rover photos from backend api:', error);
       }
     }
     fetchAPIDataMars();

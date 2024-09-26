@@ -8,13 +8,13 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 3001;
 
-// app.use(cors())
+app.use(cors())
 
 // CORS setup
-// app.use(cors({
-//     origin: 'http://localhost:5173',
-//     methods: ['GET', 'POST'],
-// }));
+app.use(cors({
+    origin: 'https://frontend-inky-xi.vercel.app',
+    methods: ['GET', 'POST'],
+}));
 
 app.get("/nasa-apod", async (req, res) => {
     try {
